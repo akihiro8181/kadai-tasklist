@@ -15,6 +15,9 @@ target/
 .settings/
 build/
 
+# hibernate
+persistence.xml
+
 # OS Files
 Thumbs.db
 .DS_Store
