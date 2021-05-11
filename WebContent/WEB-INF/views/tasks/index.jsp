@@ -9,7 +9,7 @@
                     <a href="${pageContext.request.contextPath}/show?id=${task.id}">
                         <c:out value="${task.id}" />
                     </a>
-                    &gt; <c:out value="${task.content}" />
+                    :<c:out value="${task.content}" />
                 </li>
             </c:forEach>
         </ul>
