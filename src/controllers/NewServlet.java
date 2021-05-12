@@ -36,9 +36,12 @@ public class NewServlet extends HttpServlet {
         request.setAttribute("_token", request.getSession().getId());
 
         // おまじないとしてのインスタンスを生成
+        // update時に_form.jspを使いまわすためにインスタンスを生成
         request.setAttribute("task", new Task());
 
+        // RequestDispatcher型のrd変数を宣言し、リクエストをnew.jspに渡すディスパッチャを代入
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
+        // ディスパッチャに設定したnew.jspにrequestなどを送信
         rd.forward(request, response);
 
 //        // Messageのインスタンスを生成
