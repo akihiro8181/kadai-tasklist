@@ -39,7 +39,7 @@ public class IndexServlet extends HttpServlet {
         // List型コレクションtasksを宣言し、Taskクラス（DTO）で宣言した「getAllTasks」のSelect文を実行し代入
         List<Task> tasks = em.createNamedQuery("getAllTasks", Task.class).getResultList();
 
-        // tasksテーブルのデータを取得できているため、emを閉じる(リソースの解放？)
+        // tasksテーブルのデータを取得できているため、emを閉じる
         em.close();
 
         // List型配列のtasksをrequest先の"tasks"に値を渡す

@@ -57,9 +57,9 @@ public class CreateServlet extends HttpServlet {
             em.getTransaction().begin();
             em.persist(t);  // tasksテーブルに設定したTaskインスタンスの値(content,created_at,updated_at)を保存
             em.getTransaction().commit();   // 処理の確定
-            em.close(); // emを閉じる(リソースの解放？)
+            em.close(); // emを閉じる
 
-            // indexServletを通じてindex.jspにリダイレクト
+            // indexページへリダイレクト
             response.sendRedirect(request.getContextPath() + "/index");
         }
     }

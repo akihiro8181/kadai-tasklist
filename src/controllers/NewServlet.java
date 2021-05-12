@@ -30,7 +30,6 @@ public class NewServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        EntityManager em = DBUtil.createEntityManager();
 
         // CSRF対策
         request.setAttribute("_token", request.getSession().getId());
@@ -44,24 +43,6 @@ public class NewServlet extends HttpServlet {
         // ディスパッチャに設定したnew.jspにrequestなどを送信
         rd.forward(request, response);
 
-//        // Messageのインスタンスを生成
-//        Task t = new Task();
-//
-//        String content = "hello";
-//        t.setContent(content);
-//
-//        Timestamp currentTime = new Timestamp(System.currentTimeMillis());     // 現在の日時を取得
-//        t.setCreated_at(currentTime);
-//        t.setUpdated_at(currentTime);
-//
-//        // データベースに保存
-//        em.getTransaction().begin();
-//        em.persist(t);
-//        em.getTransaction().commit();
-//
-//        // 自動採番されたIDの値を表示
-//        response.getWriter().append(Integer.valueOf(t.getId()).toString());
-//        em.close();
 
     }
 
