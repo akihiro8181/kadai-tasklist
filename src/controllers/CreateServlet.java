@@ -57,6 +57,7 @@ public class CreateServlet extends HttpServlet {
             em.getTransaction().begin();
             em.persist(t);  // tasksテーブルに設定したTaskインスタンスの値(content,created_at,updated_at)を保存
             em.getTransaction().commit();   // 処理の確定
+            request.getSession().setAttribute("flush", "登録が完了しました。");   // 登録成功時のメッセージをセッションスコープに格納
             em.close(); // emを閉じる
 
             // indexページへリダイレクト

@@ -46,6 +46,13 @@ public class IndexServlet extends HttpServlet {
         // index.jspで${tasks}等と書くことでtasksテーブルのデータを表示可能
         request.setAttribute("tasks", tasks);
 
+        // フラッシュメッセージがセッションスコープにセットされていたら
+        if(request.getSession().getAttribute("flush") != null) {
+            // セッションスコープ内のフラッシュメッセージをリクエストスコープに保存し、セッションスコープからは削除する
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
+
         // RequestDispatcher型のrd変数を宣言し、リクエストをindex.jspに渡すディスパッチャを代入
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
         // ディスパッチャに設定したindex.jspにrequestなどを送信
