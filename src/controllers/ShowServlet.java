@@ -34,7 +34,7 @@ public class ShowServlet extends HttpServlet {
      // EntityManager型のem変数を宣言し、DBUnitのStaticメソッド呼び出して初期化
         EntityManager em = DBUtil.createEntityManager();
 
-        // 該当のIDのメッセージ1件のみをデータベースから取得
+        // 該当のIDのタスク1件のみをデータベースから取得
         Task t = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
