@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.TaskValidator;
 import util.DBUtil;
 
 /**
@@ -53,15 +56,31 @@ public class CreateServlet extends HttpServlet {
             t.setCreated_at(currentTime);
             t.setUpdated_at(currentTime);
 
-            // トランザクションの始め
-            em.getTransaction().begin();
-            em.persist(t);  // tasksテーブルに設定したTaskインスタンスの値(content,created_at,updated_at)を保存
-            em.getTransaction().commit();   // 処理の確定
-            request.getSession().setAttribute("flush", "登録が完了しました。");   // 登録成功時のメッセージをセッションスコープに格納
-            em.close(); // emを閉じる
+            // バリデーションを実行してエラーがあったら新規登録のフォームに戻る
+            List<String> errors = TaskValidator.validate(t);
 
-            // indexページへリダイレクト
-            response.sendRedirect(request.getContextPath() + "/index");
+            if(errors.size() > 0) {
+                em.close();
+
+                // フォームに初期値を設定、さらにエラーメッセージを送る
+                request.setAttribute("_token", request.getSession().getId());
+                request.setAttribute("task", t);
+                request.setAttribute("errors", errors);
+
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
+                rd.forward(request, response);
+            } else {
+
+                // トランザクションの始め
+                em.getTransaction().begin();
+                em.persist(t);  // tasksテーブルに設定したTaskインスタンスの値(content,created_at,updated_at)を保存
+                em.getTransaction().commit();   // 処理の確定
+                request.getSession().setAttribute("flush", "登録が完了しました。");   // 登録成功時のメッセージをセッションスコープに格納
+                em.close(); // emを閉じる
+
+                // indexページへリダイレクト
+                response.sendRedirect(request.getContextPath() + "/index");
+            }
         }
     }
 
